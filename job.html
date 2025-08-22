@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucknow Job Portal</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --accent: #e74c3c;
+            --light: #ecf0f1;
+            --success: #2ecc71;
+            --internship: #9b59b6;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            padding-top: 20px;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            color: white;
+            border-radius: 10px;
+            padding: 20px;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .job-card {
+            transition: transform 0.3s;
+            border: none;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        
+        .job-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+        
+        .tech-job {
+            border-left: 5px solid var(--secondary);
+        }
+        
+        .non-tech-job {
+            border-left: 5px solid var(--success);
+        }
+        
+        .internship-job {
+            border-left: 5px solid var(--internship);
+        }
+        
+        .section-title {
+            position: relative;
+            padding-bottom: 15px;
+            margin: 30px 0;
+            font-weight: 700;
+        }
+        
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background-color: var(--secondary);
+        }
+        
+        .internship-title::after {
+            background-color: var(--internship);
+        }
+        
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+        
+        .payment-box {
+            background: var(--light);
+            border-radius: 10px;
+            padding: 20px;
+            text-align: center;
+        }
+        
+        .qr-code {
+            width: 200px;
+            height: 200px;
+            background: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 15px;
+            flex-direction: column;
+        }
+        
+        .highlight {
+            background-color: #fff8e1;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #ffc107;
+            margin: 20px 0;
+        }
+        
+        .contact-info {
+            background: var(--primary);
+            color: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 30px;
+        }
+        
+        .btn-primary {
+            background: var(--secondary);
+            border: none;
+        }
+        
+        .btn-success {
+            background: var(--success);
+            border: none;
+        }
+        
+        .btn-internship {
+            background: var(--internship);
+            color: white;
+        }
+        
+        .step-number {
+            display: inline-block;
+            width: 30px;
+            height: 30px;
+            background: var(--secondary);
+            color: white;
+            text-align: center;
+            line-height: 30px;
+            border-radius: 50%;
+            margin-right: 10px;
+        }
+        
+        .refund-note {
+            background: #e8f5e9;
+            padding: 15px;
+            border-radius: 8px;
+            border-left: 4px solid var(--success);
+            margin: 20px 0;
+        }
+        
+        .footer {
+            background: var(--primary);
+            color: white;
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            margin-top: 40px;
+        }
+        
+        .nav-pills .nav-link.active {
+            background-color: var(--secondary);
+        }
+        
+        .internship-benefits {
+            background: #f0e6ff;
+            border-radius: 10px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        
+        .stipend-badge {
+            background: var(--internship);
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+        
+        .fee-badge {
+            background: #e74c3c;
+            color: white;
+            padding: 5px 10px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header text-center">
+            <h1 class="display-4"><i class="fas fa-briefcase me-2"></i> Lucknow Job Portal</h1>
+            <p class="lead">Find your dream job or internship in the city of Nawabs</p>
+            <p>Application Fees: <span class="fee-badge">Full-Time Jobs: ₹200</span> <span class="fee-badge">Internships: ₹100</span> (Refundable if not selected)</p>
+        </div>
+
+        <!-- Navigation -->
+        <ul class="nav nav-pills mb-4 justify-content-center" id="myTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="jobs-tab" data-bs-toggle="pill" data-bs-target="#jobs" type="button" role="tab">Full-Time Jobs</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="internships-tab" data-bs-toggle="pill" data-bs-target="#internships" type="button" role="tab">Internships</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="apply-tab" data-bs-toggle="pill" data-bs-target="#apply" type="button" role="tab">Apply</button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="myTabContent">
+            <!-- Jobs Tab -->
+            <div class="tab-pane fade show active" id="jobs" role="tabpanel">
+                <div class="row">
+                    <div class="col-md-6">
+                        <h3 class="section-title"><i class="fas fa-laptop-code me-2"></i> Technical Jobs</h3>
+                        
+                        <div class="job-card tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Software Developer</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Tech Solutions Ltd.</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹45,000 - ₹65,000</p>
+                                <p class="card-text">Develop and maintain software applications. Experience with Python, Java, or JavaScript required.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Web Developer</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Digital Creations</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹35,000 - ₹55,000</p>
+                                <p class="card-text">Front-end and back-end web development. Knowledge of HTML, CSS, JavaScript, and PHP required.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Data Analyst</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Data Insights Inc.</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹40,000 - ₹60,000</p>
+                                <p class="card-text">Analyze data and create reports. Experience with SQL, Excel, and data visualization tools required.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Network Administrator</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Connectivity Solutions</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹38,000 - ₹52,000</p>
+                                <p class="card-text">Manage and maintain network infrastructure. CCNA or similar certification preferred.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">IT Support Specialist</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Tech Support Partners</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹25,000 - ₹40,000</p>
+                                <p class="card-text">Provide technical support to end-users. Strong problem-solving skills required.</p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <h3 class="section-title"><i class="fas fa-chalkboard-teacher me-2"></i> Non-Technical Jobs</h3>
+                        
+                        <div class="job-card non-tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Marketing Executive</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Brand Builders Inc.</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹30,000 - ₹45,000</p>
+                                <p class="card-text">Create marketing campaigns, manage social media, and analyze market trends.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card non-tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Hotel Manager</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Lucknow Grand Hotel</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹50,000 - ₹75,000</p>
+                                <p class="card-text">Oversee hotel operations, manage staff, and ensure guest satisfaction.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card non-tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Tour Guide</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Heritage Tours Lucknow</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹25,000 - ₹40,000</p>
+                                <p class="card-text">Guide tourists to historical sites in Lucknow. Fluency in English and Hindi required.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card non-tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Sales Representative</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">SalesPro Lucknow</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹20,000 - ₹35,000 + Commission</p>
+                                <p class="card-text">Sell products and services to customers. Excellent communication skills required.</p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card non-tech-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Content Writer</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Creative Content Solutions</h6>
+                                <p class="text-success"><i class="fas fa-rupee-sign me-1"></i> ₹25,000 - ₹40,000</p>
+                                <p class="card-text">Create engaging content for websites, blogs, and social media. Excellent writing skills required.</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Internships Tab -->
+            <div class="tab-pane fade" id="internships" role="tabpanel">
+                <div class="internship-benefits">
+                    <h4><i class="fas fa-graduation-cap me-2"></i> Work From Home Internships for B.Tech Students</h4>
+                    <p class="mb-0">Perfect for 2nd, 3rd, and 4th year students looking to gain practical experience while studying</p>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Web Development Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Digital Solutions Ltd.</h6>
+                                <p><span class="stipend-badge">Stipend: ₹8,000 - ₹10,000</span></p>
+                                <p class="card-text">Learn front-end and back-end development. Work with HTML, CSS, JavaScript, and React.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 3 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Python Developer Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">PyTech Solutions</h6>
+                                <p><span class="stipend-badge">Stipend: ₹9,000 - ₹10,000</span></p>
+                                <p class="card-text">Develop Python applications, work with Django/Flask frameworks, and participate in code reviews.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 3-6 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Data Science Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Data Analytics Hub</h6>
+                                <p><span class="stipend-badge">Stipend: ₹8,500 - ₹10,000</span></p>
+                                <p class="card-text">Work with data analysis, visualization, and machine learning models using Python and R.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 4 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Mobile App Development Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">AppWorks Inc.</h6>
+                                <p><span class="stipend-badge">Stipend: ₹9,000 - ₹10,000</span></p>
+                                <p class="card-text">Develop Android/iOS applications using Flutter or React Native. Learn app deployment process.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 3 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">UI/UX Design Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Design Studio</h6>
+                                <p><span class="stipend-badge">Stipend: ₹8,000 - ₹9,500</span></p>
+                                <p class="card-text">Create user interfaces, design wireframes, and prototypes using Figma or Adobe XD.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 3 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="col-md-6">
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Java Development Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">JavaTech Solutions</h6>
+                                <p><span class="stipend-badge">Stipend: ₹8,500 - ₹10,000</span></p>
+                                <p class="card-text">Learn Java programming, Spring framework, and develop enterprise applications.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 3-4 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Cloud Computing Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">Cloud Services Ltd.</h6>
+                                <p><span class="stipend-badge">Stipend: ₹9,000 - ₹10,000</span></p>
+                                <p class="card-text">Work with AWS/Azure services, learn cloud infrastructure, and deployment strategies.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 4 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Cyber Security Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">SecureNet Solutions</h6>
+                                <p><span class="stipend-badge">Stipend: ₹8,000 - ₹9,500</span></p>
+                                <p class="card-text">Learn about network security, vulnerability assessment, and ethical hacking techniques.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 3 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">AI/ML Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">AI Innovations</h6>
+                                <p><span class="stipend-badge">Stipend: ₹9,500 - ₹10,000</span></p>
+                                <p class="card-text">Work on machine learning models, neural networks, and AI applications using Python.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 4-6 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                        
+                        <div class="job-card internship-job card">
+                            <div class="card-body">
+                                <h5 class="card-title">Digital Marketing Intern</h5>
+                                <h6 class="card-subtitle mb-2 text-muted">MarketGuru Solutions</h6>
+                                <p><span class="stipend-badge">Stipend: ₹8,000 - ₹9,000</span></p>
+                                <p class="card-text">Learn SEO, SEM, social media marketing, and content strategy for digital campaigns.</p>
+                                <p class="card-text"><small class="text-muted">Duration: 3 months | Work From Home</small></p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="refund-note mt-4">
+                    <h5><i class="fas fa-hand-holding-usd me-2"></i> Application Fee for Internships: ₹100 (Refundable)</h5>
+                    <p class="mb-0">Internship applications require a ₹100 application fee, which will be refunded if you're not selected.</p>
+                </div>
+            </div>
+
+            <!-- Apply Tab -->
+            <div class="tab-pane fade" id="apply" role="tabpanel">
+                <!-- Application Form -->
+                <div class="form-container">
+                    <h3 class="section-title"><i class="fas fa-file-alt me-2"></i> Job Application Form</h3>
+                    
+                    <div class="refund-note">
+                        <h5><i class="fas fa-hand-holding-usd me-2"></i> Refund Guarantee</h5>
+                        <p class="mb-0">Your application fee will be refunded if you are not selected. 99% of applicants get selected!</p>
+                    </div>
+                    
+                    <form id="jobApplicationForm">
+                        <div class="mb-3">
+                            <label class="form-label">Applying for *</label>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="applicationType" id="fullTimeJob" value="job" checked>
+                                <label class="form-check-label" for="fullTimeJob">
+                                    Full-Time Job (₹200 application fee - refundable if not selected)
+                                </label>
+                            </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="applicationType" id="internship" value="internship">
+                                <label class="form-check-label" for="internship">
+                                    Internship (₹100 application fee - refundable if not selected)
+                                </label>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="fullName" class="form-label">Full Name *</label>
+                                <input type="text" class="form-control" id="fullName" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="email" class="form-label">Email Address *</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="phone" class="form-label">Phone Number *</label>
+                                <input type="tel" class="form-control" id="phone" required>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="jobPosition" class="form-label">Desired Position *</label>
+                                <select class="form-select" id="jobPosition" required>
+                                    <option value="">Select a position</option>
+                                    <optgroup label="Full-Time Jobs">
+                                        <option>Software Developer</option>
+                                        <option>Web Developer</option>
+                                        <option>Data Analyst</option>
+                                        <option>Network Administrator</option>
+                                        <option>IT Support Specialist</option>
+                                        <option>Marketing Executive</option>
+                                        <option>Hotel Manager</option>
+                                        <option>Tour Guide</option>
+                                        <option>Sales Representative</option>
+                                        <option>Content Writer</option>
+                                    </optgroup>
+                                    <optgroup label="Internships">
+                                        <option>Web Development Intern</option>
+                                        <option>Python Developer Intern</option>
+                                        <option>Data Science Intern</option>
+                                        <option>Mobile App Development Intern</option>
+                                        <option>UI/UX Design Intern</option>
+                                        <option>Java Development Intern</option>
+                                        <option>Cloud Computing Intern</option>
+                                        <option>Cyber Security Intern</option>
+                                        <option>AI/ML Intern</option>
+                                        <option>Digital Marketing Intern</option>
+                                    </optgroup>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="address" class="form-label">Address</label>
+                            <textarea class="form-control" id="address" rows="2"></textarea>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label for="education" class="form-label">Highest Education *</label>
+                                <select class="form-select" id="education" required>
+                                    <option value="">Select your education</option>
+                                    <option>High School</option>
+                                    <option>Diploma</option>
+                                    <option>Bachelor's Degree (Pursuing)</option>
+                                    <option>Bachelor's Degree</option>
+                                    <option>Master's Degree (Pursuing)</option>
+                                    <option>Master's Degree</option>
+                                    <option>PhD</option>
+                                </select>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label for="experience" class="form-label">Years of Experience *</label>
+                                <select class="form-select" id="experience" required>
+                                    <option value="">Select experience</option>
+                                    <option>No experience</option>
+                                    <option>0-1 years</option>
+                                    <option>1-3 years</option>
+                                    <option>3-5 years</option>
+                                    <option>5+ years</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label for="resume" class="form-label">Upload Resume (PDF, DOC) *</label>
+                            <input class="form-control" type="file" id="resume" required>
+                        </div>
+                        
+                        <div class="payment-box my-4" id="paymentSection">
+                            <h4><i class="fas fa-money-bill-wave me-2"></i> Application Fee: <span id="feeAmount">₹200</span></h4>
+                            <p>Please pay using the UPI QR code below and upload the screenshot</p>
+                            
+                            <div class="qr-code">
+<img src="/storage/emulated/0/Pictures/IMG_20250822_134958.jpg" alt="Payment QR" width="250" height="250">
+<small class="mt-2">Scan to Pay</small>
+                            </div>
+                            
+                            <p class="mt-3">UPI ID: <strong>paytmqr5k2vcx@ptys</strong></p>
+                            
+                            <div class="highlight">
+                                <p class="mb-0"><i class="fas fa-info-circle me-2"></i> After payment, take a screenshot and upload it below</p>
+                            </div>
+                            
+                            <div class="mb-3 mt-3">
+                                <label for="paymentProof" class="form-label">Upload Payment Screenshot *</label>
+                                <input class="form-control" type="file" id="paymentProof" required>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="terms" required>
+                            <label class="form-check-label" for="terms">I agree to the terms and conditions</label>
+                        </div>
+                        
+                        <button type="submit" class="btn btn-primary btn-lg w-100">
+                            <i class="fas fa-paper-plane me-2"></i> Submit Application
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <!-- Contact Information -->
+        <div class="contact-info">
+            <h3><i class="fas fa-headset me-2"></i> Contact Us</h3>
+            <p>If you have any questions about the application process, feel free to contact us:</p>
+            <p><i class="fas fa-phone me-2"></i> +91 92649 38151 (Call or WhatsApp)</p>
+            <p><i class="fas fa-envelope me-2"></i> support@lucknowjobportal.com</p>
+            <p class="mb-0"><i class="fas fa-map-marker-alt me-2"></i> Lucknow, Uttar Pradesh</p>
+        </div>
+
+        <!-- Footer -->
+        <div class="footer">
+            <p class="mb-0">© 2023 Lucknow Job Portal. All rights reserved.</p>
+            <p class="mb-0">Application fees refundable if not selected - 99% selection rate</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.getElementById('jobApplicationForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            
+            // Validate form
+            const requiredFields = ['#fullName', '#email', '#phone', '#jobPosition', '#education', '#experience'];
+            let valid = true;
+            
+            requiredFields.forEach(field => {
+                const element = document.querySelector(field);
+                if (!element.value) {
+                    element.classList.add('is-invalid');
+                    valid = false;
+                } else {
+                    element.classList.remove('is-invalid');
+                }
+            });
+            
+            // Check file uploads
+            const resume = document.getElementById('resume');
+            
+            if (!resume.files.length) {
+                resume.classList.add('is-invalid');
+                valid = false;
+            } else {
+                resume.classList.remove('is-invalid');
+            }
+            
+            // Check payment proof
+            const paymentProof = document.getElementById('paymentProof');
+            if (!paymentProof.files.length) {
+                paymentProof.classList.add('is-invalid');
+                valid = false;
+            } else {
+                paymentProof.classList.remove('is-invalid');
+            }
+            
+            // Check terms checkbox
+            const terms = document.getElementById('terms');
+            if (!terms.checked) {
+                terms.classList.add('is-invalid');
+                valid = false;
+            } else {
+                terms.classList.remove('is-invalid');
+            }
+            
+            if (valid) {
+                // Form is valid, show success message
+                const applicationType = document.querySelector('input[name="applicationType"]:checked').value;
+                if (applicationType === 'job') {
+                    alert('Application submitted successfully! We will contact you shortly. Your application fee of ₹200 will be refunded if you are not selected.');
+                } else {
+                    alert('Internship application submitted successfully! We will contact you shortly. Your application fee of ₹100 will be refunded if you are not selected.');
+                }
+                document.getElementById('jobApplicationForm').reset();
+            } else {
+                // Form is invalid, show error message
+                alert('Please fill all required fields.');
+            }
+        });
+
+        // Toggle payment section based on application type
+        document.querySelectorAll('input[name="applicationType"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const feeAmount = document.getElementById('feeAmount');
+                
+                if (this.value === 'internship') {
+                    feeAmount.textContent = '₹100';
+                } else {
+                    feeAmount.textContent = '₹200';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
